@@ -24,6 +24,69 @@ RSpec.describe User, type: :model do
     end
 
     describe 'class methods' do
+      it '.top_states' do
+        user_1 = create(:user, city: 'San Diego', state: 'CA')
+        user_2 = create(:user, city: 'San Diego', state: 'CA')
+        user_3 = create(:user, city: 'Denver', state: 'CO')
+        user_4 = create(:user, city: 'Denver', state: 'CO')
+        user_5 = create(:user, city: 'Denver', state: 'FL')
+        user_6 = create(:user, city: 'Miami', state: 'FL')
+        user_7 = create(:user, city: 'Oakland', state: 'CA')
+        user_8 = create(:user, city: 'New York', state: 'NY')
+
+        Order.create(status: "complete", user_id: user_1.id)
+        Order.create(status: "complete", user_id: user_2.id)
+        Order.create(status: "complete", user_id: user_3.id)
+        Order.create(status: "complete", user_id: user_4.id)
+        Order.create(status: "complete", user_id: user_5.id)
+        Order.create(status: "complete", user_id: user_6.id)
+        Order.create(status: "complete", user_id: user_7.id)
+        Order.create(status: "complete", user_id: user_8.id)
+
+        top_s = User.top_states(3)
+
+        expect(top_s[0].state).to eq("CA")
+        expect(top_s[0].order_count).to eq(3)
+
+        expect(top_s[1].state).to eq("CO")
+        expect(top_s[1].order_count).to eq(2)
+
+        expect(top_s[2].state).to eq("FL")
+        expect(top_s[2].order_count).to eq(2)
+      end
+
+      it '.top_cities' do
+        user_1 = create(:user, city: 'San Diego', state: 'CA')
+        user_2 = create(:user, city: 'San Diego', state: 'CA')
+        user_3 = create(:user, city: 'Denver', state: 'CO')
+        user_4 = create(:user, city: 'Denver', state: 'CO')
+        user_5 = create(:user, city: 'Denver', state: 'FL')
+        user_6 = create(:user, city: 'Miami', state: 'FL')
+        user_7 = create(:user, city: 'Oakland', state: 'CA')
+        user_8 = create(:user, city: 'New York', state: 'NY')
+
+        Order.create(status: "complete", user_id: user_1.id)
+        Order.create(status: "complete", user_id: user_2.id)
+        Order.create(status: "complete", user_id: user_3.id)
+        Order.create(status: "complete", user_id: user_4.id)
+        Order.create(status: "complete", user_id: user_5.id)
+        Order.create(status: "complete", user_id: user_6.id)
+        Order.create(status: "complete", user_id: user_7.id)
+        Order.create(status: "complete", user_id: user_8.id)
+
+        top_s = User.top_cities(3)
+
+        expect(top_s[0].city).to eq("Denver")
+        expect(top_s[0].order_count).to eq(2)
+
+        expect(top_s[1].city).to eq("San Diego")
+        expect(top_s[1].order_count).to eq(2)
+
+        expect(top_s[2].city).to eq("Denver")
+        expect(top_s[2].state).to eq("FL")
+        expect(top_s[2].order_count).to eq(1)
+      end
+
       it '.merchants - find merchant users' do
         m = create(:user)
         u = create(:user, role: 1)
@@ -120,15 +183,15 @@ RSpec.describe User, type: :model do
         expect(m.enabled).to eq(true)
       end
 
-      it 'default class method finds all of the default users' do 
+      it 'default class method finds all of the default users' do
         user1 = create(:user)
         user2 = create(:user)
         merchant = create(:user, role: 1)
 
         expected = User.default
-
+        # FIX ME
         expect(expected).to eq([user1, user2])
-      end 
+      end
 
     end
   end

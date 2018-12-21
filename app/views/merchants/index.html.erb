@@ -1,3 +1,60 @@
+<section class='stats'>
+  <div class="revenue-stats">
+    <p>Top Sellers</p>
+    <% @top_sellers.each do |m| %>
+      <div class="revenue-stat">
+        <p>Merchant: <%= m.name %></p>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="fast-order-stats">
+    <p>Fastest Merchants</p>
+    <% @fast_merchants.each do |m| %>
+      <div class="fast-order-stat">
+        <p>Merchant: <%= m.name %></p>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="slow-order-stats">
+    <p>Slowest Merchants</p>
+    <% @slow_merchants.each do |m| %>
+      <div class="slow-order-stat">
+        <p>Merchant: <%= m.name %></p>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="top-states">
+    <p>Top states for orders</p>
+    <% @top_states.each do |s| %>
+      <p>State: <%= s.state %> Order Count: <%= s.order_count %></p>
+    <% end %>
+  </div>
+
+  <div class="top-cities">
+    <p>Top cities for orders</p>
+    <% @top_cities.each do |c| %>
+      <p>City: <%= c.city %>, <%= c.state %> Order Count: <%= c.order_count %></p>
+    <% end %>
+  </div>
+
+  <% if @top_orders %>
+    <p>Top orders by item quantity</p>
+    <div class="biggest-orders">
+      <p>Largest Order: <%= @top_orders[0].total_quantity %></p>
+      <% if @top_orders[1] %>
+      <p>Second Largest Order: <%= @top_orders[1].total_quantity %></p>
+      <% end %>
+      <% if @top_orders[2] %>
+      <p>Third Largest Order: <%= @top_orders[2].total_quantity %></p>
+      <% end %>
+    </div>
+  <% end %>
+</section>
+
+
 <% @merchants.each do |m| %>
   <% if m.enabled %>
     <div class='merchant' id="merchant-#{m.id}">

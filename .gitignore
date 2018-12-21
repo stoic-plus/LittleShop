@@ -19,4 +19,6 @@ coverage
 
 .byebug_history
 
+public/assets
+
 .gitignore

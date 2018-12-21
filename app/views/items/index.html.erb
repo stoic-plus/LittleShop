@@ -3,13 +3,13 @@
   <%= flash[:success] %>
   <ul>
   <% @items.popular_items(:top, 5).each do |item| %>
-    <li class="most_popular"><%= item.name %></li>
+    <li class="most_popular"><%= link_to item.name, item_path(item) %></li>
   <% end %>
   </ul>
   <h3>Least Popular Items: </h3>
   <ul>
   <% @items.popular_items(:bottom, 5).each do |item| %>
-    <li class="least_popular"><%= item.name %></li>
+    <li class="least_popular"><%= link_to item.name, item_path(item) %></li>
   <% end %>
   </ul>
 </div>
@@ -21,7 +21,7 @@
       <%= link_to i.thumbnail, item_path(i), id: "item-image-#{i.id}" %>
       <%= i.user.name %>
       <p>$<%= i.price %></p>
-      <%= i.inventory %>
+      <p>Inventory: <%= i.inventory %></p>
     </div>
   <% end %>
 <% end %>

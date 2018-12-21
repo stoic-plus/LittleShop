@@ -32,7 +32,7 @@ describe 'Items Index Page' do
       expect(page).to have_content(@i_1.thumbnail)
       expect(page).to have_content(@i_1.user.name)
       expect(page).to have_content("$#{@i_1.price}")
-      expect(page).to have_content(@i_1.inventory)
+      expect(page).to have_content("Inventory: #{@i_1.inventory}")
     end
 
     it 'should not show disabled item information' do
@@ -40,7 +40,7 @@ describe 'Items Index Page' do
       expect(page).to_not have_content(@i_2.thumbnail)
       expect(page).to_not have_content(@i_2.user.name)
       expect(page).to_not have_content("$#{@i_2.price}")
-      expect(page).to_not have_content(@i_2.inventory)
+      expect(page).to_not have_content("Inventory: #{@i_2.inventory}")
     end
 
     it 'should link to item show through item name' do
