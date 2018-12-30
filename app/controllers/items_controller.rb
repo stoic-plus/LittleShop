@@ -28,7 +28,13 @@ class ItemsController < ApplicationController
     end
 
     current_user.items.create(item_params)
-    redirect_to dashboard_items_path
+    if @item.save
+      flash[:success] = "Item added!"
+      redirect_to dashboard_items_path
+    else
+      flash[:error] = "Something went wrong!"
+      redirect_to new_item_path
+    end
   end
 
   def update
@@ -43,6 +49,7 @@ class ItemsController < ApplicationController
   def destroy
     item = Item.find(params[:id])
     item.destroy
+    flash[:success] = "item successfully deleted!"
     redirect_to dashboard_items_path if current_merchant?
     redirect_to items_path if current_admin?
   end
@@ -56,9 +63,13 @@ class ItemsController < ApplicationController
   private
 
   def item_params
-    thing = params[:item][:thumbnail].original_filename
-    params[:item][:thumbnail] = thing
-    params.require(:item).permit(:name, :description, :price, :thumbnail, :inventory)
+    if params[:item][:thumbnail]
+      thing = params[:item][:thumbnail].original_filename
+      params[:item][:thumbnail] = thing
+      params.require(:item).permit(:name, :description, :price, :thumbnail, :inventory)
+    else
+      params.require(:item).permit(:name, :description, :thumbnail, :price, :inventory)
+    end
   end
 
   def update_item(item, params)

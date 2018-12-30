@@ -13,13 +13,13 @@ describe "As a Merchant" do
       expect(current_path).to eq(new_item_path)
       fill_in "Name",	with: "Testing"
       fill_in "Description",	with: "123"
-      binding.pry
       attach_file("Thumbnail", Rails.root.join('spec', 'test_image', 'oldguy.jpeg'))
       fill_in "Price",	with: "11"
       fill_in "Inventory",	with: "456"
       click_on "Create Item"
 
       expect(current_path).to eq(dashboard_items_path)
+      expect(page).to have_content("Item added!")
 
       expect(page).to have_content("Testing")
       expect(page).to have_content("11")
@@ -31,6 +31,7 @@ describe "As a Merchant" do
         expect(page).to have_button("delete")
         click_button "delete"
       end
+
 
       item = Item.find_by(name: "Testing")
 

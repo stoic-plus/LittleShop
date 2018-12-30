@@ -1,5 +1,6 @@
 class Item < ApplicationRecord
-  validates_presence_of :name, :description, :thumbnail, :price, :inventory
+  validates_presence_of :name, :description, :price, :inventory
+  validates :price, :inventory, numericality: { greater_than: 0 }
 
   validates_inclusion_of :enabled, :in => [true, false]
   has_many :order_items, :dependent => :destroy

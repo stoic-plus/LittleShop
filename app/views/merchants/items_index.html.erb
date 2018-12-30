@@ -16,7 +16,11 @@
             <tr id=<%="item-#{item.id}"%>> 
                 <td><%= item.id%></td>
                 <td><%= item.name%></td>
-                <td><%= image_tag(item.thumbnail, id:("#{item.thumbnail}")) %></td>
+                <% if item.thumbnail %>
+                    <td><%= image_tag(item.thumbnail, id:("#{item.thumbnail}")) %></td>
+                <% else %>
+                    <td>><%=image_tag("no_img.jpg", id:("#{item.thumbnail}")) %></td>
+                <% end %>
                 <td><%= item.price%></td>
                 <td><%= item.inventory%></td>
                 <% if item.enabled? %>
